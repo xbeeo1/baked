@@ -100,7 +100,7 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 customer_name = order.partner_id.name if order.partner_id else ''
                 customer_contact = order.partner_id.phone if order.partner_id else ''
                 receipt_type = 'Refund' if order.amount_total < 0 else 'Sale'
-                dic = line.discount * line.price_subtotal
+                dic = (line.discount * line.price_subtotal)/100
                 net_sale = line.price_subtotal - dic
                 cost_goods = line.qty * line.product_id.standard_price
                 gross_pro = net_sale - cost_goods
