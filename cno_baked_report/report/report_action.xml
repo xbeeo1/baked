@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="sale_analysis_report_xlsx_details" model="ir.actions.report">
+        <field name="name">Sale Analysis Report</field>
+        <field name="model">sale.analysis.report</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">cno_baked_report.sale_analysis_report_id_xlsx</field>
+        <field name="report_file">cno_baked_report.sale_analysis_report_id_xlsx</field>
+    </record>
+
+</odoo>
