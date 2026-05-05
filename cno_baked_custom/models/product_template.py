@@ -10,5 +10,8 @@ class ProductTemplateInherit(models.Model):
     product_owner_id = fields.Many2one(comodel_name='res.partner', string='Product Owner')
     stream = fields.Char(string='Stream')
     brand = fields.Char(string='Brands')
+    account_debit_id = fields.Many2one(comodel_name='account.account', string='Account Debit')
+    account_credit_id = fields.Many2one(comodel_name='account.account', string='Account Credit')
+    commission_per = fields.Float(string='Commission %')
 
 

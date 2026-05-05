@@ -8,11 +8,16 @@
                 <xpath expr="//notebook/page[last()]" position="after">
                     <page name="product_info" string="Product Info">
                         <group>
-                            <group>
+                            <group string="Product Information">
                                 <field name="vendor_id" />
                                 <field name="product_owner_id" />
                                 <field name="stream" />
                                 <field name="brand" />
+                            </group>
+                            <group string="Account Information" >
+                                <field name="account_debit_id" />
+                                <field name="account_credit_id" />
+                                <field name="commission_per" />
                             </group>
                         </group>
                     </page>
