@@ -15,12 +15,14 @@
 
     'website': 'https://cyngro.com',
 
-    "depends": ['base','stock','product','account','mrp'],
+    "depends": ['base','stock','product','account','mrp','point_of_sale'],
 
     "data": [
         'views/product_template_views.xml',
         'views/product_variant_views.xml',
         'views/stock_views.xml',
+        'views/pos_payment_method_views.xml',
+        'views/res_partner_views.xml',
     ],
 
 }

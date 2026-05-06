@@ -17,7 +17,7 @@
                             <group string="Account Information" >
                                 <field name="account_debit_id" />
                                 <field name="account_credit_id" />
-                                <field name="commission_per" />
+<!--                                <field name="commission_per" />-->
                             </group>
                         </group>
                     </page>
