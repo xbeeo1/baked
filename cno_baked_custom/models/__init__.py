@@ -6,6 +6,7 @@ from . import stock_move
 from . import stock_scrap
 from . import account_move
 from . import pos_payment_method
+from . import pos_order
 
 
 

@@ -14,11 +14,28 @@
                                 <field name="product_owner_id" />
                                 <field name="stream" />
                                 <field name="brand" />
-                            </group>
-                            <group string="Account Information" >
-                                <field name="account_debit_id" />
-                                <field name="account_credit_id" />
                                 <field name="commission_per" />
+                            </group>
+                            <group string="Purchase Entry" >
+                                <field name="payable_suppl_2221001_id" />
+<!--                                <field name="stock_hand_1125001_id" />-->
+<!--                                <field name="account_debit_id" />-->
+                                <field name="account_credit_id" />
+                            </group>
+                        </group>
+
+                         <group>
+                            <group string="Sale &amp; CGS">
+                                <field name="commission_based_sale" />
+                                <field name="payable_to_supplier_cr" />
+<!--                                <field name="commission_asset_cr" />-->
+<!--                                <field name="inventory_vendor_cr" />-->
+                                <field name="cost_of_goods_cr" />
+                                <field name="commission_cgs" />
+                            </group>
+                            <group string="Commission Income" >
+                                <field name="commission_income" />
+                                <field name="commission_tax" />
                             </group>
                         </group>
                     </page>

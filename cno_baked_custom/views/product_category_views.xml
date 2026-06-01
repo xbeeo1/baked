@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="product_category_form_inherit" model="ir.ui.view">
+            <field name="name">product.category.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='property_account_income_categ_id']" position="attributes">
+                    <attribute name="domain">[('account_type', 'not in', ('asset_receivable','asset_cash','liability_credit_card','off_balance'))]</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
