@@ -100,8 +100,8 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 customer_name = order.partner_id.name if order.partner_id else ''
                 customer_contact = order.partner_id.phone if order.partner_id else ''
                 receipt_type = 'Refund' if order.amount_total < 0 else 'Sale'
-                dic = (line.discount * line.price_subtotal)/100
-                net_sale = line.price_subtotal - dic
+                dic = (line.discount * (line.qty*line.price_unit))/100
+                net_sale = (line.qty*line.price_unit) - dic
                 cost_goods = line.qty * line.product_id.standard_price
                 gross_pro = net_sale - cost_goods
                 taxes = line.price_subtotal_incl - line.price_subtotal
@@ -115,7 +115,7 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 sheet.write(row, 7, line.product_id.default_code, center_left)
                 sheet.write(row, 8, line.product_id.name, center_left)
                 sheet.write(row, 9, line.qty, center_right)
-                sheet.write(row, 10, line.price_subtotal, center_right)
+                sheet.write(row, 10, line.qty*line.price_unit, center_right)
                 sheet.write(row, 11, dic, center_right)
                 sheet.write(row, 12, net_sale, center_right)
                 sheet.write(row, 13, cost_goods, center_right)

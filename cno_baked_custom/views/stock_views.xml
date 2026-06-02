@@ -21,17 +21,11 @@
                     <field name="product_id" readonly="1"/>
                     <field name="origin" readonly="1"/>
                     <field name="expiry_date" readonly="1"/>
-                    <field name="cost_allocation"/>
                     <field name="Qty"/>
-                    <field name="cost_account_id"/>
                     <button name="action_create_scrap"
                     type="object"
                     string="Create Scrap Order"
                     class="btn-primary" invisible="scrap_created"/>
-                     <button name="action_allocate_cost"
-                        type="object"
-                        string="Allocate Cost"
-                        class="btn-success" invisible="scrap_created == False or (account_move_id and account_move_id.state != 'cancel')"/>
                     <field name="allocation_state" readonly="1"/>
                 </list>
             </field>

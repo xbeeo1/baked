@@ -20,8 +20,12 @@ class ProductTemplateInherit(models.Model):
     payable_to_supplier_cr = fields.Many2one(comodel_name='account.account', string='2221001 Payable to Supplier (Cr.)')
     inventory_vendor_cr = fields.Many2one(comodel_name='account.account', string='2223002 Inventory held on b/f Vendors (Cr.)')
     cost_of_goods_cr = fields.Many2one(comodel_name='account.account', string='4111003 Cost of Goods Sold (Cr.)')
-    commission_income = fields.Many2one(comodel_name='account.account', string='Commission Income-3111001')
-    commission_tax = fields.Many2one(comodel_name='account.account', string='Commission Tax-3111001')
+    commission_income = fields.Many2one(comodel_name='account.account', string='3111001 Commission Income')
+    commission_tax = fields.Many2one(comodel_name='account.account', string='2221008 Commission Tax')
+    cost_of_goods_exp_adjustment = fields.Many2one(comodel_name='account.account', string='4111003 Cost of Goods Sold (Dr.)')
+    commission_exp_adjustment = fields.Many2one(comodel_name='account.account', string='2223006 Commission based Vendor C/A (Dr.)')
+    inventory_vendor_exp_Adjustment_cr = fields.Many2one(comodel_name='account.account',string='2223002 Inventory held on b/f Vendors (Cr.)')
+    expiration_per = fields.Float(string='Expiration %')
     commission_per = fields.Float(string='Commission %')
 
 

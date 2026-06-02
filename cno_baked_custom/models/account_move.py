@@ -34,7 +34,7 @@ class AccountMoveInherit(models.Model):
                         'debit': amount,
                         'credit': 0.0,
                         'name': 'Revsl/'+ move.name,
-                        'partner_id': None,
+                        'partner_id': move.partner_id.id,
                     }))
 
                     lines.append((0, 0, {
@@ -42,28 +42,8 @@ class AccountMoveInherit(models.Model):
                         'debit': 0.0,
                         'credit': amount,
                         'name': product.name,
-                        'partner_id': None,
+                        'partner_id': move.partner_id.id,
                     }))
-
-                # debit_line = move.line_ids.filtered(lambda l: l.debit > 0.0)[:1]
-                # if debit_line and product and product.account_debit_id and product.stock_hand_1125001_id:
-                #     amount = line.price_subtotal
-                #
-                #     account = debit_line.account_id
-                #
-                #     lines.append((0, 0, {
-                #         'account_id': product.stock_hand_1125001_id.id,
-                #         'debit': 0.0,
-                #         'credit': amount,
-                #         'name': 'Revsl/'+ move.name,
-                #     }))
-                #
-                #     lines.append((0, 0, {
-                #         'account_id': product.account_debit_id.id,
-                #         'debit': amount,
-                #         'credit': 0.0,
-                #         'name': product.name,
-                #     }))
 
             if lines:
                 move_obj = self.env['account.move'].create({

@@ -38,6 +38,16 @@
                                 <field name="commission_tax" />
                             </group>
                         </group>
+                        <group>
+                            <group string="Expiry Adjustment">
+                                <field name="cost_of_goods_exp_adjustment" />
+                                <field name="commission_exp_adjustment" />
+                                <field name="inventory_vendor_exp_Adjustment_cr" />
+                                <field name="expiration_per" />
+                            </group>
+                            <group >
+                            </group>
+                        </group>
                     </page>
                 </xpath>
             </field>

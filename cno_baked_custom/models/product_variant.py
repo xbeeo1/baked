@@ -20,8 +20,14 @@ class ProductVariantInherit(models.Model):
     payable_to_supplier_cr = fields.Many2one(comodel_name='account.account', string='2221001 Payable to Supplier (Cr.)' , related='product_tmpl_id.payable_to_supplier_cr',store=True)
     inventory_vendor_cr = fields.Many2one(comodel_name='account.account', string='2223002 Inventory held on b/f Vendors (Cr.)' , related='product_tmpl_id.inventory_vendor_cr',store=True)
     cost_of_goods_cr = fields.Many2one(comodel_name='account.account', string='4111003 Cost of Goods Sold (Cr.)' , related='product_tmpl_id.cost_of_goods_cr',store=True)
-    commission_income = fields.Many2one(comodel_name='account.account', string='Commission Income-3111001', related='product_tmpl_id.commission_income',store=True)
-    commission_tax = fields.Many2one(comodel_name='account.account', string='Commission Tax-3111001', related='product_tmpl_id.commission_tax',store=True)
-
+    commission_income = fields.Many2one(comodel_name='account.account', string='3111001 Commission Income', related='product_tmpl_id.commission_income',store=True)
+    commission_tax = fields.Many2one(comodel_name='account.account', string='2221008 Commission Tax', related='product_tmpl_id.commission_tax',store=True)
+    cost_of_goods_exp_adjustment = fields.Many2one(comodel_name='account.account',
+                                                   string='4111003 Cost of Goods Sold (Dr.)', related='product_tmpl_id.cost_of_goods_exp_adjustment',store=True)
+    commission_exp_adjustment = fields.Many2one(comodel_name='account.account',
+                                                string='2223006 Commission based Vendor C/A (Dr.)', related='product_tmpl_id.commission_exp_adjustment',store=True)
+    inventory_vendor_exp_Adjustment_cr = fields.Many2one(comodel_name='account.account',
+                                                        string='2223002 Inventory held on b/f Vendors (Cr.)', related='product_tmpl_id.inventory_vendor_exp_Adjustment_cr',store=True)
+    expiration_per = fields.Float(string='Expiration %', related='product_tmpl_id.expiration_per',store=True)
     commission_per = fields.Float(string='Commission %',related='product_tmpl_id.commission_per', store=True)
 

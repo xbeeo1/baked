@@ -18,12 +18,10 @@
     "depends": ['base','stock','product','account','mrp','point_of_sale'],
 
     "data": [
-        # 'security/ir.model.access.csv',
         'views/product_template_views.xml',
         'views/product_variant_views.xml',
         'views/stock_views.xml',
         'views/pos_payment_method_views.xml',
-        # 'wizard/vendor_settlement_entry_wizard.xml',
-    ],
+           ],
 
 }
