@@ -38,8 +38,8 @@ class StockScrap(models.Model):
         for scrap in self:
             po_obj= self.env['purchase.order'].search([('name', '=', scrap.origin)], limit=1)
             pol_obj= self.env['purchase.order.line'].search([('order_id', '=', po_obj.id),('product_id','=',scrap.product_id.id)], limit=1)
-            if scrap.product_id.expiration_per > 0:
-                if scrap.product_id.cost_of_goods_exp_adjustment and scrap.product_id.inventory_vendor_exp_Adjustment_cr and scrap.product_id.commission_exp_adjustment:
+            if scrap.product_id.expiration_per > 0 and scrap.product_id.expiration_per < 100:
+                if scrap.product_id.cost_of_goods_exp_adjustment and scrap.product_id.categ_id.property_stock_valuation_account_id and scrap.product_id.commission_exp_adjustment:
                     amount = (scrap.scrap_qty * pol_obj.price_unit) *(scrap.product_id.expiration_per/100)
                     lines.append((0, 0, {
                         'account_id': scrap.product_id.cost_of_goods_exp_adjustment.id,
@@ -48,32 +48,59 @@ class StockScrap(models.Model):
                         'name': scrap.product_id.name,
                         'partner_id': scrap.product_id.vendor_id.id,
                     }))
+                    if scrap.product_id.business_type == 'commission':
+                        lines.append((0, 0, {
+                            'account_id': scrap.product_id.commission_exp_adjustment.id,
+                            'debit': amount,
+                            'credit': 0.0,
+                            'name': scrap.product_id.name,
+                            'partner_id': scrap.product_id.vendor_id.id,
+                        }))
+                    else:
+                        lines.append((0, 0, {
+                            'account_id': scrap.product_id.payable_to_supplier_cr.id,
+                            'debit': amount,
+                            'credit': 0.0,
+                            'name': scrap.product_id.name,
+                            'partner_id': scrap.product_id.vendor_id.id,
+                        }))
                     lines.append((0, 0, {
-                        'account_id': scrap.product_id.commission_exp_adjustment.id,
-                        'debit': amount,
-                        'credit': 0.0,
-                        'name': scrap.product_id.name,
-                        'partner_id': scrap.product_id.vendor_id.id,
-                    }))
-                    lines.append((0, 0, {
-                        'account_id': scrap.product_id.inventory_vendor_exp_Adjustment_cr.id,
+                        'account_id': scrap.product_id.categ_id.property_stock_valuation_account_id.id,
                         'debit': 0.0,
                         'credit': amount*2,
                         'name': scrap.product_id.name,
                         'partner_id': scrap.product_id.vendor_id.id,
                     }))
             else:
-                if scrap.product_id.cost_of_goods_exp_adjustment.id and scrap.product_id.inventory_vendor_exp_Adjustment_cr.id:
-                    lines.append((0, 0, {
-                        'account_id': scrap.product_id.cost_of_goods_exp_adjustment.id,
-                        'debit': scrap.scrap_qty * pol_obj.price_unit,
-                        'credit': 0.0,
-                        'name': scrap.product_id.name,
-                        'partner_id': scrap.product_id.vendor_id.id,
-                    }))
+                if scrap.product_id.cost_of_goods_exp_adjustment and scrap.product_id.categ_id.property_stock_valuation_account_id:
+                    if scrap.product_id.expiration_per == 0.0:
+                        if scrap.product_id.business_type == 'commission':
+                            lines.append((0, 0, {
+                                'account_id': scrap.product_id.commission_exp_adjustment.id,
+                                'debit': scrap.scrap_qty * pol_obj.price_unit,
+                                'credit': 0.0,
+                                'name': scrap.product_id.name,
+                                'partner_id': scrap.product_id.vendor_id.id,
+                            }))
+                        else:
+                            lines.append((0, 0, {
+                                'account_id': scrap.product_id.payable_to_supplier_cr.id,
+                                'debit': scrap.scrap_qty * pol_obj.price_unit,
+                                'credit': 0.0,
+                                'name': scrap.product_id.name,
+                                'partner_id': scrap.product_id.vendor_id.id,
+                            }))
+                    else:
+                        lines.append((0, 0, {
+                            'account_id': scrap.product_id.cost_of_goods_exp_adjustment.id,
+                            'debit': scrap.scrap_qty * pol_obj.price_unit,
+                            'credit': 0.0,
+                            'name': scrap.product_id.name,
+                            'partner_id': scrap.product_id.vendor_id.id,
+                        }))
 
                     lines.append((0, 0, {
-                        'account_id': scrap.product_id.inventory_vendor_exp_Adjustment_cr.id,
+                        'account_id': scrap.product_id.categ_id.property_stock_valuation_account_id.id,
                         'debit': 0.0,
                         'credit': scrap.scrap_qty * pol_obj.price_unit,
                         'name': scrap.product_id.name,

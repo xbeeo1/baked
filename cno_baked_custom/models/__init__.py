@@ -7,6 +7,7 @@ from . import stock_scrap
 from . import account_move
 from . import pos_payment_method
 from . import pos_order
+from . import stock_picking
 
 
 
