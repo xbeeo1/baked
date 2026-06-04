@@ -18,15 +18,8 @@
 
     "data": [
         'views/views.xml',
-        'views/pos_payment_method.xml',
     ],
 
-    'assets': {
-            'point_of_sale._assets_pos': [
-                'cno_pos_custom/static/src/**/*',
-
-                    ],
-                },
 
 
 }
