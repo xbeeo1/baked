@@ -65,7 +65,7 @@ class ProductTemplateInherit(models.Model):
     @api.depends('list_price', 'standard_price')
     def _compute_margin_percent(self):
         for rec in self:
-            if rec.standard_price:
+            if rec.standard_price > 0 and rec.list_price > 0:
                 rec.margin_percent = ((rec.list_price - rec.standard_price)/rec.list_price) * 100
             else:
                 rec.margin_percent = 0.0
