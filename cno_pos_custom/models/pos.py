@@ -46,7 +46,7 @@ class PosOrderLine(models.Model):
                         if bom:
                             vals = {
                                 'origin': vals['name'],
-                                'product_id': product.product_tmpl_id.id,
+                                'product_id': product.id,
                                 'product_tmpl_id': product.product_tmpl_id.id,
                                 'product_uom_id': product.uom_id.id,
                                 'product_qty': vals['qty'],
