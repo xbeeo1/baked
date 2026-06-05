@@ -29,22 +29,23 @@
                             </group>
                         </group>
 
-                         <group invisible="business_type != 'commission' or not business_type">
+                         <group >
                             <group string="Sale &amp; CGS" >
-                                <field name="commission_based_sale" required="business_type == 'commission'"/>
-                                <field name="payable_to_supplier_cr" required="business_type == 'commission'"/>
+                                <field name="commission_based_sale" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="payable_to_supplier_cr" equired="1"/>
 <!--                                <field name="commission_asset_cr" />-->
 <!--                                <field name="inventory_vendor_cr" />-->
-                                <field name="cost_of_goods_cr" required="business_type == 'commission'"/>
-                                <field name="commission_cgs" required="business_type == 'commission'"/>
+                                <field name="cost_of_goods_cr" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="commission_cgs" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
                             </group>
                             <group string="Commission Income" >
-                                <field name="commission_income" required="business_type == 'commission'"/>
-                                <field name="commission_tax" required="business_type == 'commission'"/>
+                                <field name="commission_income" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="commission_tax" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
                             </group>
                         </group>
                         <group>
                             <group string="Expiry Adjustment">
+
                                 <field name="cost_of_goods_exp_adjustment" required="1"/>
                                 <field name="commission_exp_adjustment" required="1"/>
                                 <field name="inventory_vendor_exp_Adjustment_cr" required="1"/>

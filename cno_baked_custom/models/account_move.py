@@ -30,6 +30,7 @@ class AccountMoveInherit(models.Model):
                     payable_account = credit_line.account_id
 
                     lines.append((0, 0, {
+                        'product_id': line.product_id.id,
                         'account_id': product.payable_suppl_2221001_id.id,
                         'debit': amount,
                         'credit': 0.0,
@@ -38,6 +39,7 @@ class AccountMoveInherit(models.Model):
                     }))
 
                     lines.append((0, 0, {
+                        'product_id': line.product_id.id,
                         'account_id': product.account_credit_id.id,
                         'debit': 0.0,
                         'credit': amount,
@@ -55,3 +57,5 @@ class AccountMoveInherit(models.Model):
                 move_obj.action_post()
 
         return res
+
+
