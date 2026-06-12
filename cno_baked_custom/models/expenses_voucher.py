@@ -1,0 +1,95 @@
+# -*- coding: utf-8 -*-
+
+from odoo import fields, models, api, _
+
+
+class ExpensesVoucher(models.Model):
+    _name = "expenses.voucher"
+    _description = "Expenses Voucher"
+    _rec_name = "voucher_no"
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'analytic.mixin']
+
+    voucher_no = fields.Char(string="Voucher #",readonly=True,copy=False, default=lambda self: _('New EXPV'))
+    cost_centre_id = fields.Many2one(comodel_name='cost.centre',string="Cost Centre" , required=True)
+    brand_id = fields.Many2one(comodel_name='brand.brand',string="Brand" , required=True)
+    expense_nature_id = fields.Many2one(comodel_name='expense.nature',string="Expense Nature" , required=True)
+    revenue_stream_id = fields.Many2one(comodel_name='revenue.stream',string="Revenue Stream" , required=True)
+    date = fields.Date(string="Date",default=fields.Date.today() , required=True)
+    mop_id = fields.Many2one(comodel_name='account.journal',string="MOP",domain=[('type','in',['cash','bank'])] , required=True)
+    state = fields.Selection([('draft','Draft'),('confirm','Confirm'),('cancel','Cancel')],default='draft',required=True)
+    expenses_voucher_line = fields.One2many("expenses.voucher.line", "expenses_voucher_id",
+                                           string="Expense Voucher Lines")
+    move_id = fields.Many2one(comodel_name='account.move',string="Journal Entry")
+
+    entry_total = fields.Integer(string="Expense Voucher", compute='_entry_total')
+
+    """COUNT ALL RELATED Journal Entry"""
+    def _entry_total(self):
+        for rec in self:
+            invoice_count = self.env['account.move'].search_count([('expenses_voucher_id', '=', self.id), ('move_type', '=', 'entry')])
+            rec.entry_total = invoice_count
+
+
+
+    """VIEW RELATED Journal Entry"""
+
+    def action_view_entry(self):
+        self.ensure_one()
+        result = {
+            "type": "ir.actions.act_window",
+            "res_model": "account.move",
+            "name": _("Journal Entry"),
+            'view_mode': 'list,form',
+            'domain': [('expenses_voucher_id', '=', self.id), ('move_type', '=', 'entry')],
+        }
+        return result
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('voucher_no', _('New EXPV')) == _('New EXPV'):
+                vals['voucher_no'] = self.env['ir.sequence'].next_by_code(
+                    'expenses.voucher'
+                ) or _('New EXPV')
+
+        return super().create(vals_list)
+
+    def action_confirm(self):
+        for move in self:
+            misc_journal = self.env['account.journal'].search([('type', '=', 'general'),('name','=','Expense')], limit=1)
+            lines = []
+            if move.expenses_voucher_line:
+                total_amount = 0
+                for line in move.expenses_voucher_line:
+                    lines.append((0, 0, {
+                        'account_id': line.account_id.id,
+                        'debit': line.amount,
+                        'credit': 0.0,
+                    }))
+                    total_amount = total_amount + line.amount
+
+                lines.append((0, 0, {
+                    'account_id': move.mop_id.default_account_id.id,
+                    'debit': 0.0,
+                    'credit': total_amount,
+                }))
+
+            if lines:
+                move_obj = self.env['account.move'].create({
+                    'ref': move.voucher_no,
+                    'journal_id': misc_journal.id,
+                    'move_type': 'entry',
+                    'line_ids': lines,
+                    'expenses_voucher_id':move.id,
+                })
+                move.move_id = move_obj.id
+                move_obj.action_post()
+        self.state = 'confirm'
+
+    def action_cancel(self):
+        for x in self:
+            x.move_id.button_cancel()
+        self.state = 'cancel'
+
+    def action_reset_to_draft(self):
+        self.state = 'draft'

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_cost_centre_list" model="ir.ui.view">
+            <field name="name">cost.centre.list</field>
+            <field name="model">cost.centre</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="view_cost_centre_form" model="ir.ui.view">
+            <field name="name">cost.centre.form</field>
+            <field name="model">cost.centre</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+
+                        <group>
+                            <field name="name"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_cost_centre" model="ir.actions.act_window">
+            <field name="name">Cost Centre</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cost.centre</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Your First Cost Centre...!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_cost_centre"
+                  name="Cost Centre"
+                  parent="cno_baked_custom.menu_menu_configuration"
+                  action="action_cost_centre"
+                  sequence="1"/>
+
+    </data>
+</odoo>

@@ -9,6 +9,8 @@ class ProductTemplateInherit(models.Model):
     business_type = fields.Selection([('commission', 'Commission'),('trading', 'Trading'),('manufacturing', 'Manufacturing')],string='Business Type', required=True)
     vendor_id = fields.Many2one(comodel_name='res.partner', string='Vendor')
     product_owner_id = fields.Many2one(comodel_name='res.partner', string='Product Owner')
+    cogs_basis_id = fields.Many2one(comodel_name='cogs.basis', string='COGS Basis')
+    profit_classification_id = fields.Many2one(comodel_name='profit.classification', string='Profit Classification')
     stream = fields.Char(string='Stream')
     brand = fields.Char(string='Brands')
     payable_suppl_2221001_id = fields.Many2one(comodel_name='account.account', string='2221001 Payable to Supplier (Dr.)')

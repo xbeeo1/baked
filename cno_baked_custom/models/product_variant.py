@@ -10,6 +10,8 @@ class ProductVariantInherit(models.Model):
                                      required=True,related='product_tmpl_id.business_type', store=True)
     vendor_id = fields.Many2one(comodel_name='res.partner', string='Vendor',related='product_tmpl_id.vendor_id', store=True)
     product_owner_id = fields.Many2one(comodel_name='res.partner', string='Product Owner',related='product_tmpl_id.product_owner_id', store=True)
+    cogs_basis_id = fields.Many2one(comodel_name='cogs.basis', string='COGS Basis',related='product_tmpl_id.cogs_basis_id', store=True)
+    profit_classification_id = fields.Many2one(comodel_name='profit.classification', string='Profit Classification' ,related='product_tmpl_id.profit_classification_id', store=True)
     stream = fields.Char(string='Stream',related='product_tmpl_id.stream', store=True)
     brand = fields.Char(string='Brands',related='product_tmpl_id.brand', store=True)
     payable_suppl_2221001_id = fields.Many2one(comodel_name='account.account', string='2221001 Payable to Supplier (Dr.)', related='product_tmpl_id.payable_suppl_2221001_id',store=True)

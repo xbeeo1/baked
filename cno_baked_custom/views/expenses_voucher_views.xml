@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_expenses_voucher_list" model="ir.ui.view">
+            <field name="name">expenses.voucher.list</field>
+            <field name="model">expenses.voucher</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="voucher_no" />
+                    <field name="date"/>
+                    <field name="brand_id"/>
+                    <field name="cost_centre_id"/>
+                    <field name="expense_nature_id"/>
+                    <field name="revenue_stream_id"/>
+                    <field name="mop_id"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="view_expenses_voucher_form" model="ir.ui.view">
+            <field name="name">expenses.voucher.form</field>
+            <field name="model">expenses.voucher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_cancel" type="object" string="Cancel" class="oe_highlight" invisible="state != 'confirm'"/>
+                        <button name="action_reset_to_draft" type="object" string="Reset To Draft" class="oe_highlight" invisible="state != 'cancel'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_entry" type="object" class="oe_stat_button"
+                                    icon="fa-pencil-square-o" invisible="entry_total == 0">
+                                <field name="entry_total" widget="statinfo" string="Journal Entry"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="voucher_no" />
+                                <field name="cost_centre_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
+                                <field name="brand_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
+                                <field name="expense_nature_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="date" readonly="state != 'draft'"/>
+                                <field name="revenue_stream_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
+                                <field name="mop_id" readonly="state != 'draft'" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Lines">
+                                <field name="expenses_voucher_line" readonly="state != 'draft'">
+                                    <list string="Lines" editable="bottom" >
+                                        <field name="accounting_head_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}"/>
+                                        <field name="account_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}"/>
+                                        <field name="description"/>
+                                        <field name="amount" sum="Total"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_expenses_voucher" model="ir.actions.act_window">
+            <field name="name">Expenses Voucher</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">expenses.voucher</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create Your First Expenses Voucher...!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="main_menu_expenses_voucher"
+                  name="Expense Voucher"
+                  sequence="9"
+        />
+
+        <menuitem id="menu_action_expenses_voucher"
+                  name="Expense Voucher"
+                  parent="main_menu_expenses_voucher"
+                  action="action_expenses_voucher"
+                  sequence="1"/>
+
+        <menuitem id="menu_menu_configuration"
+                  name="Configuration"
+                  parent="main_menu_expenses_voucher"
+                  sequence="2"/>
+
+
+    </data>
+</odoo>

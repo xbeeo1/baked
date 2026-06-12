@@ -19,6 +19,7 @@
     "data": [
         'security/ir.model.access.csv',
         'report/report_action.xml',
+        'report/expenses_voucher_report_template.xml',
         'wizards/sale_analysis_report_wizard.xml',
     ],
 

@@ -1,2 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_vendor_settlement_entry_wizard,vendor.settlement.entry.wizard,model_vendor_settlement_entry_wizard,base.group_user,1,1,1,1
+access_expenses_voucher,expenses.voucher,model_expenses_voucher,base.group_user,1,1,1,1
+access_cost_centre,cost.centre,model_cost_centre,base.group_user,1,1,1,1
+access_brand_brand,brand.brand,model_brand_brand,base.group_user,1,1,1,1
+access_expense_nature,expense.nature,model_expense_nature,base.group_user,1,1,1,1
+access_revenue_stream,revenue.stream,model_revenue_stream,base.group_user,1,1,1,1
+access_accounting_head,accounting.head,model_accounting_head,base.group_user,1,1,1,1
+access_accounting_head_line,accounting.head.line,model_accounting_head_line,base.group_user,1,1,1,1
+access_expenses_voucher_line,expenses.voucher.line,model_expenses_voucher_line,base.group_user,1,1,1,1
+access_cogs_basis,cogs.basis,model_cogs_basis,base.group_user,1,1,1,1
+access_profit_classification,profit.classification,model_profit_classification,base.group_user,1,1,1,1

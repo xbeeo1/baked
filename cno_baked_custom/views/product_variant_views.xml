@@ -12,6 +12,8 @@
                                 <field name="business_type" />
                                 <field name="vendor_id" />
                                 <field name="product_owner_id" />
+                                <field name="cogs_basis_id" />
+                                <field name="profit_classification_id" />
                                 <field name="stream" />
                                 <field name="brand" />
                                 <field name="commission_per" />
@@ -23,26 +25,27 @@
                                 <field name="account_credit_id" required="business_type == 'commission'"/>
                             </group>
                         </group>
-                        <group invisible="business_type != 'commission' or not business_type">
-                            <group string="Sale &amp; CGS">
-                                <field name="commission_based_sale" required="business_type == 'commission'"/>
-                                <field name="payable_to_supplier_cr" required="business_type == 'commission'"/>
+                        <group >
+                            <group string="Sale &amp; CGS" >
+                                <field name="commission_based_sale" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="payable_to_supplier_cr" required="1"/>
 <!--                                <field name="commission_asset_cr" />-->
 <!--                                <field name="inventory_vendor_cr" />-->
-                                <field name="cost_of_goods_cr" required="business_type == 'commission'"/>
-                                <field name="commission_cgs" required="business_type == 'commission'"/>
+                                <field name="cost_of_goods_cr" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="commission_cgs" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
                             </group>
                             <group string="Commission Income" >
-                                <field name="commission_income" required="business_type == 'commission'"/>
-                                <field name="commission_tax" required="business_type == 'commission'"/>
+                                <field name="commission_income" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
+                                <field name="commission_tax" required="business_type == 'commission'" invisible="business_type != 'commission' or not business_type"/>
                             </group>
                         </group>
-                        <group invisible="business_type != 'commission' or not business_type">
+                        <group>
                             <group string="Expiry Adjustment">
-                                <field name="cost_of_goods_exp_adjustment" required="business_type == 'commission'"/>
-                                <field name="commission_exp_adjustment" required="business_type == 'commission'"/>
-                                <field name="inventory_vendor_exp_Adjustment_cr" required="business_type == 'commission'"/>
-                                <field name="expiration_per" required="business_type == 'commission'"/>
+
+                                <field name="cost_of_goods_exp_adjustment" required="1"/>
+                                <field name="commission_exp_adjustment" required="1"/>
+                                <field name="inventory_vendor_exp_Adjustment_cr" required="1"/>
+                                <field name="expiration_per" required="1"/>
                             </group>
                             <group >
                             </group>

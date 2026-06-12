@@ -7,6 +7,7 @@ class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
 
     vendor_settlement_entry = fields.Boolean(string='Vendor Settlement Entry')
+    expenses_voucher_id = fields.Many2one(comodel_name='expenses.voucher',string='Expenses Voucher')
     def action_post(self):
         res = super().action_post()
         for move in self:
