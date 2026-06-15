@@ -6,6 +6,7 @@ from odoo import fields, models,api
 class ExpensesVoucherLines(models.Model):
     _name = "expenses.voucher.line"
     _description = "Expenses Voucher Lines"
+    _inherit = ['analytic.mixin']
 
     accounting_head_id = fields.Many2one(comodel_name="accounting.head",string="Accounting Head",required=True)
     account_id = fields.Many2one(comodel_name='account.account',string="Account",required=True,domain="[('id', 'in', available_account_ids)]")

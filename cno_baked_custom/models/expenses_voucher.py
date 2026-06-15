@@ -10,15 +10,13 @@ class ExpensesVoucher(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin', 'analytic.mixin']
 
     voucher_no = fields.Char(string="Voucher #",readonly=True,copy=False, default=lambda self: _('New EXPV'))
-    cost_centre_id = fields.Many2one(comodel_name='cost.centre',string="Cost Centre" , required=True)
-    brand_id = fields.Many2one(comodel_name='brand.brand',string="Brand" , required=True)
     expense_nature_id = fields.Many2one(comodel_name='expense.nature',string="Expense Nature" , required=True)
-    revenue_stream_id = fields.Many2one(comodel_name='revenue.stream',string="Revenue Stream" , required=True)
     date = fields.Date(string="Date",default=fields.Date.today() , required=True)
     mop_id = fields.Many2one(comodel_name='account.journal',string="MOP",domain=[('type','in',['cash','bank'])] , required=True)
     state = fields.Selection([('draft','Draft'),('confirm','Confirm'),('cancel','Cancel')],default='draft',required=True)
     expenses_voucher_line = fields.One2many("expenses.voucher.line", "expenses_voucher_id",
                                            string="Expense Voucher Lines")
+    payee_id = fields.Many2one(comodel_name='res.partner',string="Payee", required=True)
     move_id = fields.Many2one(comodel_name='account.move',string="Journal Entry")
 
     entry_total = fields.Integer(string="Expense Voucher", compute='_entry_total')
@@ -61,10 +59,14 @@ class ExpensesVoucher(models.Model):
             if move.expenses_voucher_line:
                 total_amount = 0
                 for line in move.expenses_voucher_line:
+                    analytic_distribution=line.analytic_distribution
                     lines.append((0, 0, {
                         'account_id': line.account_id.id,
                         'debit': line.amount,
                         'credit': 0.0,
+                        'name': move.voucher_no,
+                        'analytic_distribution': line.analytic_distribution,
+                        'partner_id': move.payee_id.id,
                     }))
                     total_amount = total_amount + line.amount
 
@@ -72,6 +74,9 @@ class ExpensesVoucher(models.Model):
                     'account_id': move.mop_id.default_account_id.id,
                     'debit': 0.0,
                     'credit': total_amount,
+                    'name':move.voucher_no,
+                    'analytic_distribution':analytic_distribution,
+                    'partner_id': move.payee_id.id,
                 }))
 
             if lines:

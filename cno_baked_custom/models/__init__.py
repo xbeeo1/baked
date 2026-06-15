@@ -9,10 +9,7 @@ from . import pos_payment_method
 from . import pos_order
 from . import stock_picking
 from . import expenses_voucher
-from . import cost_centre
-from . import brand_brand
 from . import expense_nature
-from . import revenue_stream
 from . import accounting_head_lines
 from . import accounting_head
 from . import expenses_voucher_lines
