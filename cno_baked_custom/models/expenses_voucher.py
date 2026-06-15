@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models, api, _
-
+from odoo.exceptions import ValidationError
 
 class ExpensesVoucher(models.Model):
     _name = "expenses.voucher"
@@ -54,6 +54,15 @@ class ExpensesVoucher(models.Model):
 
     def action_confirm(self):
         for move in self:
+            attachment_count = self.env['ir.attachment'].search_count([
+                ('res_model', '=', self._name),
+                ('res_id', '=', move.id),
+            ])
+
+            if not attachment_count:
+                raise ValidationError(
+                    _("Please attach at least one document before confirmation.")
+                )
             misc_journal = self.env['account.journal'].search([('type', '=', 'general'),('name','=','Expense')], limit=1)
             lines = []
             if move.expenses_voucher_line:
