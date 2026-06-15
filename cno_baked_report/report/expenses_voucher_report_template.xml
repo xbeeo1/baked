@@ -33,32 +33,10 @@
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-4">
-                                    <b>Cost Centre:</b>
+                                    <b>Expense Nature:</b>
                                 </div>
                                 <div class="col-8">
-                                    <span t-esc="o.cost_centre_id.name"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-4">
-                                    <b>Revenue Stream:</b>
-                                </div>
-                                <div class="col-8">
-                                    <span t-esc="o.revenue_stream_id.name"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-4">
-                                    <b>Brand:</b>
-                                </div>
-                                <div class="col-8">
-                                    <span t-esc="o.brand_id.name"/>
+                                    <span t-esc="o.expense_nature_id.name"/>
                                 </div>
                             </div>
                         </div>
@@ -78,10 +56,10 @@
                         <div class="col-6">
                             <div class="row">
                                 <div class="col-4">
-                                    <b>Expense Nature:</b>
+                                    <b>Payee:</b>
                                 </div>
                                 <div class="col-8">
-                                    <span t-esc="o.expense_nature_id.name"/>
+                                    <span t-esc="o.payee_id.name"/>
                                 </div>
                             </div>
                         </div>
@@ -137,6 +115,20 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:250px;">
+                        <div class="col-4 border-top text-center">
+                            <strong>Prepared by:</strong>
+                        </div>
+                        <div class="col-1"/>
+                        <div class="col-3 border-top text-center">
+                            <strong>Approved by:</strong>
+                        </div>
+
+                        <div class="col-1"/>
+                        <div class="col-3 border-top text-center">
+                            <strong>Received by:</strong>
                         </div>
                     </div>
                 </t>

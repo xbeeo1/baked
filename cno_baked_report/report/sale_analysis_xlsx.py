@@ -78,20 +78,19 @@ class SaleAnalysisXlsx(models.AbstractModel):
         sheet.write(row, 16, 'COGS/Vendor Cost', format3_colored)
         sheet.write(row, 17, 'Item Gross Profit', format3_colored)
         sheet.write(row, 18, 'Item Profit Margin %', format3_colored)
-        sheet.write(row, 19, 'Gross profit', format3_colored)
-        sheet.write(row, 20, 'Tax Rate (POS)', format3_colored)
-        sheet.write(row, 21, 'Tax Amount', format3_colored)
-        sheet.write(row, 22, 'Commission Rate', format3_colored)
-        sheet.write(row, 23, 'Commission Income', format3_colored)
-        sheet.write(row, 24, 'Vendor Basis', format3_colored)
-        sheet.write(row, 25, 'COGS Basis', format3_colored)
-        sheet.write(row, 26, 'Profit Classification', format3_colored)
-        sheet.write(row, 27, 'Invoice QR', format3_colored)
-        sheet.write(row, 28, 'MOP', format3_colored)
-        sheet.write(row, 29, 'Store', format3_colored)
-        sheet.write(row, 30, 'Cashier Name', format3_colored)
-        sheet.write(row, 31, 'Customer Name', format3_colored)
-        sheet.write(row, 32, 'Customer Contacts', format3_colored)
+        sheet.write(row, 19, 'Tax Rate (POS)', format3_colored)
+        sheet.write(row, 20, 'Tax Amount', format3_colored)
+        sheet.write(row, 21, 'Commission Rate', format3_colored)
+        sheet.write(row, 22, 'Commission Income', format3_colored)
+        sheet.write(row, 23, 'Vendor Basis', format3_colored)
+        sheet.write(row, 24, 'COGS Basis', format3_colored)
+        sheet.write(row, 25, 'Profit Classification', format3_colored)
+        sheet.write(row, 26, 'Invoice QR', format3_colored)
+        sheet.write(row, 27, 'MOP', format3_colored)
+        sheet.write(row, 28, 'Store', format3_colored)
+        sheet.write(row, 29, 'Cashier Name', format3_colored)
+        sheet.write(row, 30, 'Customer Name', format3_colored)
+        sheet.write(row, 31, 'Customer Contacts', format3_colored)
         row += 1
 
         # Loop through the pos orders and display the corresponding order lines
@@ -118,6 +117,8 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 cost_goods = line.qty * line.product_id.standard_price
                 gross_pro = net_sale - cost_goods
                 taxes = line.price_subtotal_incl - line.price_subtotal
+                if order.amount_total < 0:
+                    taxes = -1 * taxes
                 tax_per = ', '.join(
                     f"{tax.amount}%"
                     for tax in line.tax_ids_after_fiscal_position
@@ -141,18 +142,17 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 sheet.write(row, 16, cost_goods, center_right)
                 sheet.write(row, 17, net_sale-cost_goods, center_right)
                 sheet.write(row, 18, f"{round(((net_sale - cost_goods) / net_sale) * 100)}%", center_right)
-                sheet.write(row, 19, gross_pro, center_right)
-                sheet.write(row, 20, tax_per, center_right)
-                sheet.write(row, 21, taxes, center_right)
-                sheet.write(row, 22, f"{line.product_id.commission_per}%", center_right)
-                sheet.write(row, 23, (net_sale-cost_goods)*line.product_id.commission_per, center_right)
-                sheet.write(row, 24, (net_sale-cost_goods) - ((net_sale-cost_goods)*line.product_id.commission_per), center_right)
-                sheet.write(row, 25, cogs_b, center_right)
-                sheet.write(row, 26, pro_classi, center_right)
-                sheet.write(row, 27, order.invoice_number, center_right)
-                sheet.write(row, 28, payment_methods_str, center_left)
-                sheet.write(row, 29, order.session_id.config_id.name, center_left)
-                sheet.write(row, 30, order.user_id.name, center_left)
-                sheet.write(row, 31, customer_name, center_left)
-                sheet.write(row, 32, customer_contact, center_left)
+                sheet.write(row, 19, tax_per, center_right)
+                sheet.write(row, 20, taxes, center_right)
+                sheet.write(row, 21, f"{line.product_id.commission_per}%", center_right)
+                sheet.write(row, 22, (net_sale-cost_goods)*(line.product_id.commission_per/100), center_right)
+                sheet.write(row, 23, (net_sale-cost_goods) - ((net_sale-cost_goods)*(line.product_id.commission_per/100)), center_right)
+                sheet.write(row, 24, cogs_b, center_right)
+                sheet.write(row, 25, pro_classi, center_right)
+                sheet.write(row, 26, order.invoice_number, center_right)
+                sheet.write(row, 27, payment_methods_str, center_left)
+                sheet.write(row, 28, order.session_id.config_id.name, center_left)
+                sheet.write(row, 29, order.user_id.name, center_left)
+                sheet.write(row, 30, customer_name, center_left)
+                sheet.write(row, 31, customer_contact, center_left)
                 row += 1
