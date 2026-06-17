@@ -141,7 +141,7 @@ class SaleAnalysisXlsx(models.AbstractModel):
                 sheet.write(row, 15, line.product_id.standard_price, center_right)
                 sheet.write(row, 16, cost_goods, center_right)
                 sheet.write(row, 17, net_sale-cost_goods, center_right)
-                sheet.write(row, 18, f"{round(((net_sale - cost_goods) / net_sale) * 100)}%", center_right)
+                sheet.write(row, 18, f"{round(((net_sale - cost_goods) / net_sale) * 100) if net_sale else 0}%", center_right)
                 sheet.write(row, 19, tax_per, center_right)
                 sheet.write(row, 20, taxes, center_right)
                 sheet.write(row, 21, f"{line.product_id.commission_per}%", center_right)
