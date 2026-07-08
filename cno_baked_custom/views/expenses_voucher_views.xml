@@ -9,7 +9,6 @@
                 <list>
                     <field name="voucher_no" />
                     <field name="date"/>
-                    <field name="expense_nature_id"/>
                     <field name="mop_id"/>
                     <field name="payee_id"/>
                 </list>
@@ -38,14 +37,13 @@
                         <group>
                             <group>
                                 <field name="voucher_no" />
+                                <field name="mop_id" readonly="state != 'draft'" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
 <!--                                <field name="cost_centre_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>-->
 <!--                                <field name="brand_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>-->
-                                <field name="expense_nature_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
                             </group>
                             <group>
                                 <field name="date" readonly="state != 'draft'"/>
 <!--                                <field name="revenue_stream_id" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>-->
-                                <field name="mop_id" readonly="state != 'draft'" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
                                 <field name="payee_id" readonly="state != 'draft'" options="{'no_quick_create': True, 'no_create_edit': True,'no_open': True, 'no_create': True}" />
                             </group>
                         </group>
@@ -114,6 +112,7 @@
         <menuitem id="menu_menu_configuration"
                   name="Configuration"
                   parent="main_menu_expenses_voucher"
+                  groups="cno_baked_custom.group_expenses_voucher_conf_menu_access"
                   sequence="2"/>
 
 

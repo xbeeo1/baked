@@ -10,7 +10,7 @@ class ExpensesVoucher(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin', 'analytic.mixin']
 
     voucher_no = fields.Char(string="Voucher #",readonly=True,copy=False, default=lambda self: _('New EXPV'))
-    expense_nature_id = fields.Many2one(comodel_name='expense.nature',string="Expense Nature" , required=True)
+    expense_nature_id = fields.Many2one(comodel_name='expense.nature',string="Expense Nature")
     date = fields.Date(string="Date",default=fields.Date.today() , required=True)
     mop_id = fields.Many2one(comodel_name='account.journal',string="MOP",domain=[('type','in',['cash','bank'])] , required=True)
     state = fields.Selection([('draft','Draft'),('confirm','Confirm'),('cancel','Cancel')],default='draft',required=True)
@@ -18,7 +18,6 @@ class ExpensesVoucher(models.Model):
                                            string="Expense Voucher Lines")
     payee_id = fields.Many2one(comodel_name='res.partner',string="Payee", required=True)
     move_id = fields.Many2one(comodel_name='account.move',string="Journal Entry")
-
     entry_total = fields.Integer(string="Expense Voucher", compute='_entry_total')
 
     """COUNT ALL RELATED Journal Entry"""
@@ -63,6 +62,7 @@ class ExpensesVoucher(models.Model):
                 raise ValidationError(
                     _("Please attach at least one document before confirmation.")
                 )
+
             misc_journal = self.env['account.journal'].search([('type', '=', 'general'),('name','=','Expense')], limit=1)
             lines = []
             if move.expenses_voucher_line:
