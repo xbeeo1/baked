@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_pnl_dashboard" model="ir.actions.client">
+        <field name="name">Profit &amp; Loss</field>
+        <field name="tag">pnl_dashboard_action</field>
+    </record>
+    <menuitem id="menu_pnl_dashboard"
+              name="Profit &amp; Loss"
+              action="action_pnl_dashboard"
+              parent="spreadsheet_dashboard.spreadsheet_dashboard_menu_root"
+              sequence="15"/>
+</odoo>
