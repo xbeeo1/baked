@@ -20,6 +20,7 @@
     "data": [
         'security/ir.model.access.csv',
         'views/pnl_dashboard_views.xml',
+        'views/top_vendors_views.xml',
         'data/pos_dashboard_vendor.xml',
     ],
     'assets': {
@@ -27,6 +28,9 @@
             'cno_baked_custom_dashboard/static/src/pnl_dashboard.js',
             'cno_baked_custom_dashboard/static/src/pnl_dashboard.xml',
             'cno_baked_custom_dashboard/static/src/pnl_dashboard.scss',
+            'cno_baked_custom_dashboard/static/src/top_vendors.js',
+            'cno_baked_custom_dashboard/static/src/top_vendors.xml',
+            'cno_baked_custom_dashboard/static/src/top_vendors.scss',
         ],
     },
 
