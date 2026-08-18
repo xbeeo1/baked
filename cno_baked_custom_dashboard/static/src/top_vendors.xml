@@ -15,6 +15,22 @@
 
                 <div class="top-vendors-date-filters d-flex align-items-center gap-2">
 
+                    <!-- Vendor Search -->
+                    <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        placeholder="Search Vendor..."
+                        t-model="state.vendor_search"
+                        t-on-keydown="onVendorKeydown"
+                    />
+
+                    <button
+                        class="btn btn-sm btn-primary"
+                        t-on-click="onVendorSearch"
+                    >
+                        Search
+                    </button>
+
                     <!-- From Date -->
                     <label class="mb-0">
                         From

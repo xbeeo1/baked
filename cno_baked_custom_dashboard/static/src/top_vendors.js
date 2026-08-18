@@ -15,6 +15,7 @@ export class TopVendors extends Component {
         this.state = useState({
             date_from: today,
             date_to: today,
+            vendor_search: "",
             vendors: [],
             loading: false,
         });
@@ -39,18 +40,20 @@ export class TopVendors extends Component {
 
         this.state.loading = true;
 
-        this.state.vendors = await this.orm.call(
-            "report.pos.order",
-            "get_top_vendors",
-            [],
-            {
-                date_from: this.state.date_from,
-                date_to: this.state.date_to,
-                limit: 10,
-            }
-        );
-
-        this.state.loading = false;
+        try {
+            this.state.vendors = await this.orm.call(
+                "report.pos.order",
+                "get_top_vendors",
+                [],
+                {
+                    date_from: this.state.date_from,
+                    date_to: this.state.date_to,
+                    vendor_search: this.state.vendor_search,
+                }
+            );
+        } finally {
+            this.state.loading = false;
+        }
     }
 
     async onDateChange() {
@@ -63,6 +66,16 @@ export class TopVendors extends Component {
 
     async onRefresh() {
         await this.loadVendors();
+    }
+
+    async onVendorSearch() {
+        await this.loadVendors();
+    }
+
+    async onVendorKeydown(ev) {
+        if (ev.key === "Enter") {
+            await this.onVendorSearch();
+        }
     }
 
     formatRevenue(value) {
